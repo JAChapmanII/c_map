@@ -105,14 +105,21 @@ int main(int argc, char **argv) {
 	addNode(bm, "9", "----.");
 	addNode(bm, "0", "-----");
 
+	addNode(bm, "sos", "...---...");
+
 	char s[2] = " \0"; char c;
 	for(c = 'a'; c <= 'z'; ++c) {
 		s[0] = c; bMap *n = findNode(bm, s);
 		if(!n)
-			printf("\tCharacter \"%s\" not found", s);
+			printf("\tCharacter \"%s\" not found\n", s);
 		else
 			printf("Value of bm[\"%s\"]: %s\n", s, n->val);
 	}
+	bMap *n = findNode(bm, "sos");
+	if(!n)
+		printf("\tSOS not found\n");
+	else
+		printf("SOS found: %s\n", n->val);
 
 	deconsBMap(bm);
 	return 0;
