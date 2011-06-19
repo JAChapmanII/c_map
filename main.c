@@ -9,7 +9,7 @@ typedef struct bMapNode {
 	struct bMapNode *right;
 } bMap;
 
-bMap *consBMap(char* k, char* v) {
+bMap *consBMap(char *k, char *v) {
 	if(!k || !v) return NULL;
 	bMap *bm = malloc(sizeof(bMap));
 	if(bm) {
@@ -30,7 +30,7 @@ void deconsBMap(bMap *bm) {
 	free(bm->val);
 }
 
-bMap *findNode(bMap *bm, char* k) {
+bMap *findNode(bMap *bm, char *k) {
 	if(!bm || !k) return NULL;
 	int cmp = strcmp(bm->key, k);
 	if(!cmp)
@@ -38,6 +38,10 @@ bMap *findNode(bMap *bm, char* k) {
 	if(cmp < 0)
 		return findNode(bm->left, k);
 	return findNode(bm->right, k);
+}
+
+void addNode(bMap *bm, char *k, char *v) {
+	if(!bm || !k || !v) return;
 }
 
 int main(int argc, char **argv) {
