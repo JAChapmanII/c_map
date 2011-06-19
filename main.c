@@ -42,17 +42,77 @@ bMap *findNode(bMap *bm, char *k) {
 
 void addNode(bMap *bm, char *k, char *v) {
 	if(!bm || !k || !v) return;
+	int cmp = strcmp(bm->key, k);
+	if(!cmp) {
+		if(strcmp(bm->val, v)) {
+			free(bm->val);
+			bm->val = malloc(strlen(k) + 1);
+			strcpy(bm->val, v);
+		}
+	} else if(cmp < 0) {
+		if(!bm->left) {
+			bm->left = consBMap(k, v);
+		}
+		addNode(bm->left, k, v);
+	} else {
+		if(!bm->right) {
+			bm->right = consBMap(k, v);
+		}
+		addNode(bm->right, k, v);
+	}
 }
 
 int main(int argc, char **argv) {
-	bMap *bm = consBMap("a", ".-");
-	printf("Hello, world!\n");
+	bMap *bm = consBMap("m", "--");
+	addNode(bm, "f", "..-.");
+	addNode(bm, "c", "-.-.");
+	addNode(bm, "a", ".-");
+	addNode(bm, "b", "-...");
+	addNode(bm, "d", "-..");
+	addNode(bm, "e", ".");
 
-	bMap *n = findNode(bm, "a");
-	if(!n)
-		printf("Not found");
-	else
-		printf("Value of bm[\"a\"]: %s\n", n->val);
+	addNode(bm, "i", "..");
+	addNode(bm, "g", "--.");
+	addNode(bm, "h", "....");
+	addNode(bm, "j", ".---");
+	addNode(bm, "k", "-.-");
+	addNode(bm, "l", ".-..");
+
+	addNode(bm, "t", "-");
+
+	addNode(bm, "p", ".--.");
+	addNode(bm, "n", "-.");
+	addNode(bm, "o", "---");
+	addNode(bm, "q", "--.-");
+	addNode(bm, "r", ".-.");
+	addNode(bm, "s", "...");
+
+	addNode(bm, "x", "-..-");
+	addNode(bm, "u", "..-");
+	addNode(bm, "v", "...-");
+	addNode(bm, "w", ".--");
+	addNode(bm, "y", "-.--");
+	addNode(bm, "z", "--..");
+
+	addNode(bm, "1", ".----");
+	addNode(bm, "2", "..---");
+	addNode(bm, "3", "...--");
+	addNode(bm, "4", "....-");
+	addNode(bm, "5", ".....");
+	addNode(bm, "6", "-....");
+	addNode(bm, "7", "--...");
+	addNode(bm, "8", "---..");
+	addNode(bm, "9", "----.");
+	addNode(bm, "0", "-----");
+
+	char s[2] = " \0"; char c;
+	for(c = 'a'; c <= 'z'; ++c) {
+		s[0] = c; bMap *n = findNode(bm, s);
+		if(!n)
+			printf("\tCharacter \"%s\" not found", s);
+		else
+			printf("Value of bm[\"%s\"]: %s\n", s, n->val);
+	}
 
 	deconsBMap(bm);
 	return 0;
