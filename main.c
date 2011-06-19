@@ -9,7 +9,7 @@ typedef struct bMapNode {
 	struct bMapNode *right;
 } bMap;
 
-bMap *consBMap(char *k, char *v) {
+bMap *consBMap(char *k, char *v) { //{{{
 	if(!k || !v) return NULL;
 	bMap *bm = malloc(sizeof(bMap));
 	if(bm) {
@@ -20,17 +20,17 @@ bMap *consBMap(char *k, char *v) {
 		strcpy(bm->val, v);
 	}
 	return bm;
-}
+} //}}}
 
-void deconsBMap(bMap *bm) {
+void deconsBMap(bMap *bm) { //{{{
 	if(!bm) return;
 	deconsBMap(bm->left);
 	deconsBMap(bm->right);
 	free(bm->key);
 	free(bm->val);
-}
+} //}}}
 
-bMap *findNode(bMap *bm, char *k) {
+bMap *findNode(bMap *bm, char *k) { //{{{
 	if(!bm || !k) return NULL;
 	int cmp = strcmp(bm->key, k);
 	if(!cmp)
@@ -38,9 +38,9 @@ bMap *findNode(bMap *bm, char *k) {
 	if(cmp < 0)
 		return findNode(bm->left, k);
 	return findNode(bm->right, k);
-}
+} //}}}
 
-void addNode(bMap *bm, char *k, char *v) {
+void addNode(bMap *bm, char *k, char *v) { //{{{
 	if(!bm || !k || !v) return;
 	int cmp = strcmp(bm->key, k);
 	if(!cmp) {
@@ -49,18 +49,24 @@ void addNode(bMap *bm, char *k, char *v) {
 			bm->val = malloc(strlen(k) + 1);
 			strcpy(bm->val, v);
 		}
-	} else if(cmp < 0) {
-		if(!bm->left) {
-			bm->left = consBMap(k, v);
-		}
-		addNode(bm->left, k, v);
-	} else {
-		if(!bm->right) {
-			bm->right = consBMap(k, v);
-		}
-		addNode(bm->right, k, v);
 	}
-}
+
+	bMap **child;
+	if(cmp < 0)
+		child = &bm->left;
+	else
+		child = &bm->right;
+
+	if(!*child)
+		*child = consBMap(k, v);
+	else
+		addNode(*child, k, v);
+} //}}}
+
+int bMapSize(bMap *bm) { //{{{
+	if(!bm) return 0;
+	return bMapSize(bm->left) + bMapSize(bm->right) + 1;
+} //}}}
 
 int main(int argc, char **argv) {
 	bMap *bm = consBMap("m", "--");
@@ -120,6 +126,8 @@ int main(int argc, char **argv) {
 		printf("\tSOS not found\n");
 	else
 		printf("SOS found: %s\n", n->val);
+
+	printf("Size of bm: %d\n", bMapSize(bm));
 
 	deconsBMap(bm);
 	return 0;
