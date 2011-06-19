@@ -40,7 +40,10 @@ bMap *findNode(bMap *bm, char *k) { //{{{
 	return findNode(bm->right, k);
 } //}}}
 
-void addNode(bMap *bm, char *k, char *v) { //{{{
+bMap *rightRotation(bMap *n);
+bMap *leftRotation(bMap *n);
+
+bMap *addNode(bMap *bm, char *k, char *v) { //{{{
 	if(!bm || !k || !v) return;
 	int cmp = strcmp(bm->key, k);
 	if(!cmp) {
@@ -60,7 +63,44 @@ void addNode(bMap *bm, char *k, char *v) { //{{{
 	if(!*child)
 		*child = consBMap(k, v);
 	else
-		addNode(*child, k, v);
+		*child = addNode(*child, k, v);
+
+	int ls = bMapSize(bm->left), rs = bMapSize(bm->right);
+	if(rs - ls > 1) {
+		int r_ls = bMapSize(bm->right->left), r_rs = bMapSize(bm->right->right);
+		if(r_ls > r_rs)
+			bm->right = rightRotation(bm->right);
+		/*
+		bm = leftRotation(bm);
+		*/
+	} else if(ls - rs > 1) {
+		int l_ls = bMapSize(bm->left->left), l_rs = bMapSize(bm->left->right);
+		if(l_rs > l_ls)
+			bm->left = leftRotation(bm->left);
+		/*
+		bm = rightRotation(bm);
+		*/
+	}
+
+	return bm;
+} //}}}
+
+bMap *rightRotation(bMap *n) { //{{{
+	bMap *nr = n->left, *c = n->left->right;
+
+	nr->right = n;
+	n->left = c;
+
+	return nr;
+} //}}}
+
+bMap *leftRotation(bMap *n) { //{{{
+	bMap *nr = n->right, *b = n->right->left;
+
+	nr->left = n;
+	n->right = b;
+
+	return nr;
 } //}}}
 
 int bMapSize(bMap *bm) { //{{{
@@ -70,48 +110,48 @@ int bMapSize(bMap *bm) { //{{{
 
 int main(int argc, char **argv) {
 	bMap *bm = consBMap("m", "--");
-	addNode(bm, "f", "..-.");
-	addNode(bm, "c", "-.-.");
-	addNode(bm, "a", ".-");
-	addNode(bm, "b", "-...");
-	addNode(bm, "d", "-..");
-	addNode(bm, "e", ".");
+	bm = addNode(bm, "f", "..-.");
+	bm = addNode(bm, "c", "-.-.");
+	bm = addNode(bm, "a", ".-");
+	bm = addNode(bm, "b", "-...");
+	bm = addNode(bm, "d", "-..");
+	bm = addNode(bm, "e", ".");
 
-	addNode(bm, "i", "..");
-	addNode(bm, "g", "--.");
-	addNode(bm, "h", "....");
-	addNode(bm, "j", ".---");
-	addNode(bm, "k", "-.-");
-	addNode(bm, "l", ".-..");
+	bm = addNode(bm, "i", "..");
+	bm = addNode(bm, "g", "--.");
+	bm = addNode(bm, "h", "....");
+	bm = addNode(bm, "j", ".---");
+	bm = addNode(bm, "k", "-.-");
+	bm = addNode(bm, "l", ".-..");
 
-	addNode(bm, "t", "-");
+	bm = addNode(bm, "t", "-");
 
-	addNode(bm, "p", ".--.");
-	addNode(bm, "n", "-.");
-	addNode(bm, "o", "---");
-	addNode(bm, "q", "--.-");
-	addNode(bm, "r", ".-.");
-	addNode(bm, "s", "...");
+	bm = addNode(bm, "p", ".--.");
+	bm = addNode(bm, "n", "-.");
+	bm = addNode(bm, "o", "---");
+	bm = addNode(bm, "q", "--.-");
+	bm = addNode(bm, "r", ".-.");
+	bm = addNode(bm, "s", "...");
 
-	addNode(bm, "x", "-..-");
-	addNode(bm, "u", "..-");
-	addNode(bm, "v", "...-");
-	addNode(bm, "w", ".--");
-	addNode(bm, "y", "-.--");
-	addNode(bm, "z", "--..");
+	bm = addNode(bm, "x", "-..-");
+	bm = addNode(bm, "u", "..-");
+	bm = addNode(bm, "v", "...-");
+	bm = addNode(bm, "w", ".--");
+	bm = addNode(bm, "y", "-.--");
+	bm = addNode(bm, "z", "--..");
 
-	addNode(bm, "1", ".----");
-	addNode(bm, "2", "..---");
-	addNode(bm, "3", "...--");
-	addNode(bm, "4", "....-");
-	addNode(bm, "5", ".....");
-	addNode(bm, "6", "-....");
-	addNode(bm, "7", "--...");
-	addNode(bm, "8", "---..");
-	addNode(bm, "9", "----.");
-	addNode(bm, "0", "-----");
+	bm = addNode(bm, "1", ".----");
+	bm = addNode(bm, "2", "..---");
+	bm = addNode(bm, "3", "...--");
+	bm = addNode(bm, "4", "....-");
+	bm = addNode(bm, "5", ".....");
+	bm = addNode(bm, "6", "-....");
+	bm = addNode(bm, "7", "--...");
+	bm = addNode(bm, "8", "---..");
+	bm = addNode(bm, "9", "----.");
+	bm = addNode(bm, "0", "-----");
 
-	addNode(bm, "sos", "...---...");
+	bm = addNode(bm, "sos", "...---...");
 
 	char s[2] = " \0"; char c;
 	for(c = 'a'; c <= 'z'; ++c) {
