@@ -9,6 +9,13 @@ typedef struct bMapNode {
 	struct bMapNode *right;
 } bMap;
 
+typedef struct {
+	char *k, *v;
+} entry;
+
+bMap *rightRotation(bMap *n);
+bMap *leftRotation(bMap *n);
+
 bMap *consBMap(char *k, char *v) { //{{{
 	if(!k || !v) return NULL;
 	bMap *bm = malloc(sizeof(bMap));
@@ -39,9 +46,6 @@ bMap *findNode(bMap *bm, char *k) { //{{{
 		return findNode(bm->left, k);
 	return findNode(bm->right, k);
 } //}}}
-
-bMap *rightRotation(bMap *n);
-bMap *leftRotation(bMap *n);
 
 bMap *addNode(bMap *bm, char *k, char *v) { //{{{
 	if(!bm || !k || !v) return;
@@ -104,34 +108,30 @@ int bMapSize(bMap *bm) { //{{{
 	return bMapSize(bm->left) + bMapSize(bm->right) + 1;
 } //}}}
 
-typedef struct {
-	char *k, *v;
-} entry;
-
-bMap *addNodes(bMap *bm, entry nodes[]) {
+bMap *addNodes(bMap *bm, entry nodes[]) { //{{{
 	while(nodes->k)
 		bm = addNode(bm, nodes->k, nodes->v), ++nodes;
 	return bm;
-}
+} //}}}
 
-int bMapDepth(bMap *bm) {
+int bMapDepth(bMap *bm) { //{{{
 	if(!bm) return 0;
 	int ld = bMapDepth(bm->left), rd = bMapDepth(bm->right);
 	if(ld > rd)
 		return ld + 1;
 	else
 		return rd + 1;
-}
+} //}}}
 
 int main(int argc, char **argv) {
-	bMap *bm = consBMap("m", "--"); 
+	bMap *bm = consBMap("M", "--"); 
 	static entry characters[] = { 
-		{"f", "..-."}, {"c", "-.-."}, {"a", ".-"}, {"b", "-..."}, {"d", "-.."},
-		{"e", "."}, {"i", ".."}, {"g", "--."}, {"h", "...."}, {"j", ".---"},
-		{"k", "-.-"}, {"l", ".-.."}, {"t", "-"}, {"p", ".--."}, {"n", "-."},
-		{"o", "---"}, {"q", "--.-"}, {"r", ".-."}, {"s", "..."}, {"x", "-..-"},
-		{"u", "..-"}, {"v", "...-"}, {"w", ".--"}, {"y", "-.--"}, {"z", "--.."},
-		{ NULL, NULL } 
+		{"A", ".-"}, {"B", "-..."}, {"C", "-.-."}, {"D", "-.."}, {"E", "."},
+		{"F", "..-."}, {"G", "--."}, {"H", "...."}, {"I", ".."}, {"J", ".---"},
+		{"K", "-.-"}, {"L", ".-.."}, {"M", "--"}, {"N", "-."}, {"O", "---"},
+		{"P", ".--."}, {"Q", "--.-"}, {"R", ".-."}, {"S", "..."}, {"T", "-"},
+		{"U", "..-"}, {"V", "...-"}, {"W", ".--"}, {"X", "-..-"}, {"Y", "-.--"},
+		{"Z", "--.."}, { NULL, NULL }
 	};
 	bm = addNodes(bm, characters);
 
@@ -145,14 +145,7 @@ int main(int argc, char **argv) {
 	bm = addNode(bm, "sos", "...---...");
 
 	char s[2] = " \0"; char c;
-	for(c = 'a'; c <= 'z'; ++c) {
-		s[0] = c; bMap *n = findNode(bm, s);
-		if(!n)
-			printf("\tCharacter \"%s\" not found\n", s);
-		else
-			printf("Value of bm[\"%s\"]: %s\n", s, n->val);
-	}
-	for(c = '0'; c <= '9'; ++c) {
+	for(c = ' '; c <= '_'; ++c) {
 		s[0] = c; bMap *n = findNode(bm, s);
 		if(!n)
 			printf("\tCharacter \"%s\" not found\n", s);
@@ -166,11 +159,11 @@ int main(int argc, char **argv) {
 		printf("SOS found: %s\n", n->val);
 
 	printf("Size of bm: %d\n", bMapSize(bm));
-	printf("Size of bm->left: %d\n", bMapSize(bm->left));
-	printf("Size of bm->right: %d\n", bMapSize(bm->right));
+	printf("\tbm->left: %d\n", bMapSize(bm->left));
+	printf("\tbm->right: %d\n", bMapSize(bm->right));
 	printf("Depth of bm: %d\n", bMapDepth(bm));
-	printf("Size of bm->left: %d\n", bMapDepth(bm->left));
-	printf("Size of bm->right: %d\n", bMapDepth(bm->right));
+	printf("\tbm->left: %d\n", bMapDepth(bm->left));
+	printf("\tbm->right: %d\n", bMapDepth(bm->right));
 
 	deconsBMap(bm);
 	return 0;
