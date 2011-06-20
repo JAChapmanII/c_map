@@ -124,19 +124,16 @@ int bMapDepth(bMap *bm) {
 }
 
 int main(int argc, char **argv) {
-	bMap *bm = consBMap("m", "--"); bm = addNode(bm, "f", "..-.");
-	bm = addNode(bm, "c", "-.-."); bm = addNode(bm, "a", ".-");
-	bm = addNode(bm, "b", "-..."); bm = addNode(bm, "d", "-..");
-	bm = addNode(bm, "e", "."); bm = addNode(bm, "i", "..");
-	bm = addNode(bm, "g", "--."); bm = addNode(bm, "h", "....");
-	bm = addNode(bm, "j", ".---"); bm = addNode(bm, "k", "-.-");
-	bm = addNode(bm, "l", ".-.."); bm = addNode(bm, "t", "-");
-	bm = addNode(bm, "p", ".--."); bm = addNode(bm, "n", "-.");
-	bm = addNode(bm, "o", "---"); bm = addNode(bm, "q", "--.-");
-	bm = addNode(bm, "r", ".-."); bm = addNode(bm, "s", "...");
-	static entry entries[] = { {"x", "-..-"}, {"u", "..-"}, {"v", "...-"},
-			{"w", ".--"}, {"y", "-.--"}, {"z", "--.."}, { NULL, NULL } };
-	bm = addNodes(bm, entries);
+	bMap *bm = consBMap("m", "--"); 
+	static entry characters[] = { 
+		{"f", "..-."}, {"c", "-.-."}, {"a", ".-"}, {"b", "-..."}, {"d", "-.."},
+		{"e", "."}, {"i", ".."}, {"g", "--."}, {"h", "...."}, {"j", ".---"},
+		{"k", "-.-"}, {"l", ".-.."}, {"t", "-"}, {"p", ".--."}, {"n", "-."},
+		{"o", "---"}, {"q", "--.-"}, {"r", ".-."}, {"s", "..."}, {"x", "-..-"},
+		{"u", "..-"}, {"v", "...-"}, {"w", ".--"}, {"y", "-.--"}, {"z", "--.."},
+		{ NULL, NULL } 
+	};
+	bm = addNodes(bm, characters);
 
 	static entry numbers[] = {
 		{"1", ".----"}, {"2", "..---"}, {"3", "...--"}, {"4", "....-"},
