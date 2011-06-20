@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ifndef CMAP_H
+#define CMAP_H
 
 typedef struct bMapNode
 {
@@ -28,3 +27,4 @@ bMap *findNode(bMap *bm, char *k);
 int bMapDepth(bMap *bm);
 int bMapSize(bMap *bm);
 
+#endif // CMAP_H
