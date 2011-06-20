@@ -65,15 +65,15 @@ bMap *addNode(bMap *bm, char *k, char *v) { //{{{
 	else
 		*child = addNode(*child, k, v);
 
-	int ls = bMapSize(bm->left), rs = bMapSize(bm->right);
-	if(rs - ls > 1) {
-		int r_ls = bMapSize(bm->right->left), r_rs = bMapSize(bm->right->right);
-		if(r_ls > r_rs)
+	int ld = bMapDepth(bm->left), rd = bMapDepth(bm->right);
+	if(rd - ld > 1) {
+		int r_ld = bMapDepth(bm->right->left), r_rd = bMapDepth(bm->right->right);
+		if(r_ld > r_rd)
 			bm->right = rightRotation(bm->right);
 		bm = leftRotation(bm);
-	} else if(ls - rs > 1) {
-		int l_ls = bMapSize(bm->left->left), l_rs = bMapSize(bm->left->right);
-		if(l_rs > l_ls)
+	} else if(ld - rd > 1) {
+		int l_ld = bMapDepth(bm->left->left), l_rd = bMapDepth(bm->left->right);
+		if(l_rd > l_ld)
 			bm->left = leftRotation(bm->left);
 		bm = rightRotation(bm);
 	}
@@ -112,6 +112,15 @@ bMap *addNodes(bMap *bm, entry nodes[]) {
 	while(nodes->k)
 		bm = addNode(bm, nodes->k, nodes->v), ++nodes;
 	return bm;
+}
+
+int bMapDepth(bMap *bm) {
+	if(!bm) return 0;
+	int ld = bMapDepth(bm->left), rd = bMapDepth(bm->right);
+	if(ld > rd)
+		return ld + 1;
+	else
+		return rd + 1;
 }
 
 int main(int argc, char **argv) {
@@ -160,6 +169,11 @@ int main(int argc, char **argv) {
 		printf("SOS found: %s\n", n->val);
 
 	printf("Size of bm: %d\n", bMapSize(bm));
+	printf("Size of bm->left: %d\n", bMapSize(bm->left));
+	printf("Size of bm->right: %d\n", bMapSize(bm->right));
+	printf("Depth of bm: %d\n", bMapDepth(bm));
+	printf("Size of bm->left: %d\n", bMapDepth(bm->left));
+	printf("Size of bm->right: %d\n", bMapDepth(bm->right));
 
 	deconsBMap(bm);
 	return 0;
