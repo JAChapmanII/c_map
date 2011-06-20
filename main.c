@@ -104,6 +104,16 @@ int bMapSize(bMap *bm) { //{{{
 	return bMapSize(bm->left) + bMapSize(bm->right) + 1;
 } //}}}
 
+typedef struct {
+	char *k, *v;
+} entry;
+
+bMap *addNodes(bMap *bm, entry nodes[]) {
+	while(nodes->k)
+		bm = addNode(bm, nodes->k, nodes->v), ++nodes;
+	return bm;
+}
+
 int main(int argc, char **argv) {
 	bMap *bm = consBMap("m", "--"); bm = addNode(bm, "f", "..-.");
 	bm = addNode(bm, "c", "-.-."); bm = addNode(bm, "a", ".-");
@@ -115,20 +125,28 @@ int main(int argc, char **argv) {
 	bm = addNode(bm, "p", ".--."); bm = addNode(bm, "n", "-.");
 	bm = addNode(bm, "o", "---"); bm = addNode(bm, "q", "--.-");
 	bm = addNode(bm, "r", ".-."); bm = addNode(bm, "s", "...");
-	bm = addNode(bm, "x", "-..-"); bm = addNode(bm, "u", "..-");
-	bm = addNode(bm, "v", "...-"); bm = addNode(bm, "w", ".--");
-	bm = addNode(bm, "y", "-.--"); bm = addNode(bm, "z", "--..");
+	static entry entries[] = { {"x", "-..-"}, {"u", "..-"}, {"v", "...-"},
+			{"w", ".--"}, {"y", "-.--"}, {"z", "--.."}, { NULL, NULL } };
+	bm = addNodes(bm, entries);
 
-	bm = addNode(bm, "1", ".----"); bm = addNode(bm, "2", "..---");
-	bm = addNode(bm, "3", "...--"); bm = addNode(bm, "4", "....-");
-	bm = addNode(bm, "5", "....."); bm = addNode(bm, "6", "-....");
-	bm = addNode(bm, "7", "--..."); bm = addNode(bm, "8", "---..");
-	bm = addNode(bm, "9", "----."); bm = addNode(bm, "0", "-----");
+	static entry numbers[] = {
+		{"1", ".----"}, {"2", "..---"}, {"3", "...--"}, {"4", "....-"},
+		{"5", "....."}, {"6", "-...."}, {"7", "--..."}, {"8", "---.."},
+		{"9", "----."}, {"0", "-----"}, { NULL, NULL }
+	};
+	bm = addNodes(bm, numbers);
 
 	bm = addNode(bm, "sos", "...---...");
 
 	char s[2] = " \0"; char c;
 	for(c = 'a'; c <= 'z'; ++c) {
+		s[0] = c; bMap *n = findNode(bm, s);
+		if(!n)
+			printf("\tCharacter \"%s\" not found\n", s);
+		else
+			printf("Value of bm[\"%s\"]: %s\n", s, n->val);
+	}
+	for(c = '0'; c <= '9'; ++c) {
 		s[0] = c; bMap *n = findNode(bm, s);
 		if(!n)
 			printf("\tCharacter \"%s\" not found\n", s);
