@@ -1,0 +1,19 @@
+c_map is a string -> string map implementation in C using AVL trees as the
+backing store. 
+
+I kind of want to mess around with macro concatenation to get the thing to be
+"generic" in the sense that you pass the type to a macro which generates the
+corresponding class key_valueMap or something similar to that. Then you would
+pass function pointers for things like the comparator and what-not.
+
+Building:
+	make
+
+Running:
+	./cmap
+	Runs a little demo that does ASCII to Morse code
+
+Extending:
+	Read the bmap.h and bmap.c file. Figure out how to use it based on main.c,
+	it should be simple enough ;)
+
