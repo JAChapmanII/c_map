@@ -3,7 +3,8 @@
 #include "bmap.h"
 
 int main(int argc, char **argv) {
-	bMap *bm = consBMap("M", "--"); 
+	bMap *bm = consBMap("M", "--"), *n;
+	char s[2] = " \0", c;
 	static entry characters[] = { 
 		{"A", ".-"}, {"B", "-..."}, {"C", "-.-."}, {"D", "-.."}, {"E", "."},
 		{"F", "..-."}, {"G", "--."}, {"H", "...."}, {"I", ".."}, {"J", ".---"},
@@ -12,26 +13,25 @@ int main(int argc, char **argv) {
 		{"U", "..-"}, {"V", "...-"}, {"W", ".--"}, {"X", "-..-"}, {"Y", "-.--"},
 		{"Z", "--.."}, { NULL, NULL }
 	};
-	bm = addNodes(bm, characters);
 
 	static entry numbers[] = {
 		{"1", ".----"}, {"2", "..---"}, {"3", "...--"}, {"4", "....-"},
 		{"5", "....."}, {"6", "-...."}, {"7", "--..."}, {"8", "---.."},
 		{"9", "----."}, {"0", "-----"}, { NULL, NULL }
 	};
-	bm = addNodes(bm, numbers);
 
+	bm = addNodes(bm, characters);
+	bm = addNodes(bm, numbers);
 	bm = addNode(bm, "sos", "...---...");
 
-	char s[2] = " \0"; char c;
 	for(c = ' '; c <= '_'; ++c) {
-		s[0] = c; bMap *n = findNode(bm, s);
+		s[0] = c; n = findNode(bm, s);
 		if(!n)
 			printf("\tCharacter \"%s\" not found\n", s);
 		else
 			printf("Value of bm[\"%s\"]: %s\n", s, n->val);
 	}
-	bMap *n = findNode(bm, "sos");
+	n = findNode(bm, "sos");
 	if(!n)
 		printf("\tSOS not found\n");
 	else

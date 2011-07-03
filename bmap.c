@@ -4,8 +4,9 @@
 #include "bmap.h"
 
 bMap *consBMap(char *k, char *v) { /* {{{ */
+	bMap *bm;
 	if(!k || !v) return NULL;
-	bMap *bm = malloc(sizeof(bMap));
+	bm = malloc(sizeof(bMap));
 	if(bm) {
 		bm->left = NULL; bm->right = NULL;
 		bm->key = malloc(strlen(k) + 1);
@@ -25,8 +26,9 @@ void deconsBMap(bMap *bm) { /* {{{ */
 } /* }}} */
 
 bMap *findNode(bMap *bm, char *k) { /* {{{ */
+	int cmp;
 	if(!bm || !k) return NULL;
-	int cmp = strcmp(bm->key, k);
+	cmp = strcmp(bm->key, k);
 	if(!cmp)
 		return bm;
 	if(cmp < 0)
@@ -35,8 +37,10 @@ bMap *findNode(bMap *bm, char *k) { /* {{{ */
 } /* }}} */
 
 bMap *addNode(bMap *bm, char *k, char *v) { /* {{{ */
+	int cmp, ld, rd;
+	bMap **child;
 	if(!bm || !k || !v) return;
-	int cmp = strcmp(bm->key, k);
+	cmp = strcmp(bm->key, k);
 	if(!cmp) {
 		if(strcmp(bm->val, v)) {
 			free(bm->val);
@@ -45,7 +49,6 @@ bMap *addNode(bMap *bm, char *k, char *v) { /* {{{ */
 		}
 	}
 
-	bMap **child;
 	if(cmp < 0)
 		child = &bm->left;
 	else
@@ -56,7 +59,8 @@ bMap *addNode(bMap *bm, char *k, char *v) { /* {{{ */
 	else
 		*child = addNode(*child, k, v);
 
-	int ld = bMapDepth(bm->left), rd = bMapDepth(bm->right);
+	ld = bMapDepth(bm->left);
+	rd = bMapDepth(bm->right);
 	if(rd - ld > 1) {
 		int r_ld = bMapDepth(bm->right->left), r_rd = bMapDepth(bm->right->right);
 		if(r_ld > r_rd)
@@ -102,8 +106,10 @@ bMap *addNodes(bMap *bm, entry nodes[]) { /* {{{ */
 } /* }}} */
 
 int bMapDepth(bMap *bm) { /* {{{ */
+	int ld, rd;
 	if(!bm) return 0;
-	int ld = bMapDepth(bm->left), rd = bMapDepth(bm->right);
+	ld = bMapDepth(bm->left);
+	rd = bMapDepth(bm->right);
 	if(ld > rd)
 		return ld + 1;
 	else
