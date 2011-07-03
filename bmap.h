@@ -27,4 +27,4 @@ bMap *findNode(bMap *bm, char *k);
 int bMapDepth(bMap *bm);
 int bMapSize(bMap *bm);
 
-#endif // CMAP_H
+#endif /* CMAP_H */

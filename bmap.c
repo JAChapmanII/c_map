@@ -3,7 +3,7 @@
 
 #include "bmap.h"
 
-bMap *consBMap(char *k, char *v) { //{{{
+bMap *consBMap(char *k, char *v) { /* {{{ */
 	if(!k || !v) return NULL;
 	bMap *bm = malloc(sizeof(bMap));
 	if(bm) {
@@ -14,17 +14,17 @@ bMap *consBMap(char *k, char *v) { //{{{
 		strcpy(bm->val, v);
 	}
 	return bm;
-} //}}}
+} /* }}} */
 
-void deconsBMap(bMap *bm) { //{{{
+void deconsBMap(bMap *bm) { /* {{{ */
 	if(!bm) return;
 	deconsBMap(bm->left);
 	deconsBMap(bm->right);
 	free(bm->key);
 	free(bm->val);
-} //}}}
+} /* }}} */
 
-bMap *findNode(bMap *bm, char *k) { //{{{
+bMap *findNode(bMap *bm, char *k) { /* {{{ */
 	if(!bm || !k) return NULL;
 	int cmp = strcmp(bm->key, k);
 	if(!cmp)
@@ -32,9 +32,9 @@ bMap *findNode(bMap *bm, char *k) { //{{{
 	if(cmp < 0)
 		return findNode(bm->left, k);
 	return findNode(bm->right, k);
-} //}}}
+} /* }}} */
 
-bMap *addNode(bMap *bm, char *k, char *v) { //{{{
+bMap *addNode(bMap *bm, char *k, char *v) { /* {{{ */
 	if(!bm || !k || !v) return;
 	int cmp = strcmp(bm->key, k);
 	if(!cmp) {
@@ -70,43 +70,43 @@ bMap *addNode(bMap *bm, char *k, char *v) { //{{{
 	}
 
 	return bm;
-} //}}}
+} /* }}} */
 
-bMap *rightRotation(bMap *n) { //{{{
+bMap *rightRotation(bMap *n) { /* {{{ */
 	bMap *nr = n->left, *c = n->left->right;
 
 	nr->right = n;
 	n->left = c;
 
 	return nr;
-} //}}}
+} /* }}} */
 
-bMap *leftRotation(bMap *n) { //{{{
+bMap *leftRotation(bMap *n) { /* {{{ */
 	bMap *nr = n->right, *b = n->right->left;
 
 	nr->left = n;
 	n->right = b;
 
 	return nr;
-} //}}}
+} /* }}} */
 
-int bMapSize(bMap *bm) { //{{{
+int bMapSize(bMap *bm) { /* {{{ */
 	if(!bm) return 0;
 	return bMapSize(bm->left) + bMapSize(bm->right) + 1;
-} //}}}
+} /* }}} */
 
-bMap *addNodes(bMap *bm, entry nodes[]) { //{{{
+bMap *addNodes(bMap *bm, entry nodes[]) { /* {{{ */
 	while(nodes->k)
 		bm = addNode(bm, nodes->k, nodes->v), ++nodes;
 	return bm;
-} //}}}
+} /* }}} */
 
-int bMapDepth(bMap *bm) { //{{{
+int bMapDepth(bMap *bm) { /* {{{ */
 	if(!bm) return 0;
 	int ld = bMapDepth(bm->left), rd = bMapDepth(bm->right);
 	if(ld > rd)
 		return ld + 1;
 	else
 		return rd + 1;
-} //}}}
+} /* }}} */
 
