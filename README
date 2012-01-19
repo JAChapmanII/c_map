@@ -1,6 +1,11 @@
 c_map is a string -> string map implementation in C using AVL trees as the
 backing store. 
 
+NOTE: this is very out-of-date. I integrated the structure into an IRC bot, and
+there the it actually had a chance to mature. I may think about merging
+commits into here relevant to it, but until then just look there for usable
+code.
+
 I kind of want to mess around with macro concatenation to get the thing to be
 "generic" in the sense that you pass the type to a macro which generates the
 corresponding class key_valueMap or something similar to that. Then you would
