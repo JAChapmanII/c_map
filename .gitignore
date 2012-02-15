@@ -1,3 +1,5 @@
-*.o
-*.gch
-cmap
+lib/ismap.*
+lib/simap.*
+lib/vmap.*
+mittest
+obj/*

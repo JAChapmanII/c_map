@@ -1,24 +1,38 @@
 c_map is a string -> string map implementation in C using AVL trees as the
-backing store. 
+backing store.
 
-NOTE: this is very out-of-date. I integrated the structure into an IRC bot, and
-there the it actually had a chance to mature. I may think about merging
-commits into here relevant to it, but until then just look there for usable
-code.
+NOTE: this is missing a lot of relavent commits. If I had it to do over again,
+I would have kept the changes to this structure here so it wouldn't be a
+complete piece of crap. It evolved a lot in jbotc, the first IRC bot it was
+in. Then when it got moved over to quincy, it matured even more and got
+horribly hacky templates. At some point I may create a repository that has
+this one's history, then the relavent history from jbotc, and then the
+relavent history from quincy. Until then, if you want any good view of the
+evolution you'll have to look across several repositories.
 
-I kind of want to mess around with macro concatenation to get the thing to be
-"generic" in the sense that you pass the type to a macro which generates the
-corresponding class key_valueMap or something similar to that. Then you would
-pass function pointers for things like the comparator and what-not.
+There was an idea to use macro's to create maps of any type. I really didn't
+like that method, as it looked ugly to me. Since I was bored, I added a shell
+script that substitutes various things in map.{h,c} to create a new map
+structure with different types.
+	vmap: string -> string
+	ismap: integer -> string
+	simap: string -> integer
 
 Building:
 	make
 
 Running:
-	./cmap
-	Runs a little demo that does ASCII to Morse code
+	There is not a whole lot to run ;) There is a test of the map iterator,
+	however. You can run that as:
+		./mittest
+
+Using:
+	Once you've built the maps, the .h files should have some fairly good
+	instructions on how to use the functions and what they do. If not, please
+	poke me and I'll try to fix it.
 
 Extending:
-	Read the bmap.h and bmap.c file. Figure out how to use it based on main.c,
-	it should be simple enough ;)
+	Look at one of the sets of .{dec,def,imp} files to see how the mstruct
+	system works. I will make documentation for this if anyone is interested
+	but can't figure it out themselves.
 
