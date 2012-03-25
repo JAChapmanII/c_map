@@ -45,11 +45,9 @@ ${NAME}_Iterator *${VNAME}i_create(void);
 // Free space assoicated with a ${NAME}_Iterator
 void ${VNAME}i_free(${NAME}_Iterator *${VNAME}i);
 
-/* Add a new key/value pair to the tree
+/* Set a key/value pair in the tree (create if necessary)
  * 	returns 1 on failure, 0 otherwise
  */
-int ${VNAME}_add(${NAME} *${VNAME}, ${KEY_TYPE} key, ${VAL_TYPE} val);
-/* Update the value in an already existing node */
 int ${VNAME}_set(${NAME} *${VNAME}, ${KEY_TYPE} key, ${VAL_TYPE} val);
 /* Remove a node from the tree */
 int ${VNAME}_erase(${NAME} *${VNAME}, ${KEY_TYPE} key);

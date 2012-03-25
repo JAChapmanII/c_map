@@ -14,7 +14,7 @@ ${C_INCLUDE}
 
 void ${VNAME}n_fixHeight(${NAME}_Node *${VNAME}n);
 
-${NAME}_Node *${VNAME}n_add(${NAME}_Node *${VNAME}n,
+${NAME}_Node *${VNAME}n_set(${NAME}_Node *${VNAME}n,
 		${KEY_TYPE} key, ${VAL_TYPE} val);
 ${NAME}_Node *${VNAME}n_find(${NAME}_Node *${VNAME}n, ${KEY_TYPE} key);
 ${NAME}_Node *${VNAME}n_min(${NAME}_Node *${VNAME}n);
@@ -97,7 +97,7 @@ void ${VNAME}i_free(${NAME}_Iterator *${VNAME}i) { // {{{
 } // }}}
 
 /* TODO: error handling */
-int ${VNAME}_add(${NAME} *${VNAME}, ${KEY_TYPE} key, ${VAL_TYPE} val) {
+int ${VNAME}_set(${NAME} *${VNAME}, ${KEY_TYPE} key, ${VAL_TYPE} val) {
 	if(!${KEY_VALID} || !${VAL_VALID})
 		return 1;
 	if(!${VNAME}->root) {
@@ -106,10 +106,10 @@ int ${VNAME}_add(${NAME} *${VNAME}, ${KEY_TYPE} key, ${VAL_TYPE} val) {
 			return 1;
 		return 0;
 	}
-	${VNAME}->root = ${VNAME}n_add(${VNAME}->root, key, val);
+	${VNAME}->root = ${VNAME}n_set(${VNAME}->root, key, val);
 	return 0;
 }
-${NAME}_Node *${VNAME}n_add(${NAME}_Node *${VNAME}n, // {{{
+${NAME}_Node *${VNAME}n_set(${NAME}_Node *${VNAME}n, // {{{
 		${KEY_TYPE} key, ${VAL_TYPE} val) {
 	// TODO: this was just return; ....
 	if(!${VNAME}n || !${KEY_VALID} || !${VAL_VALID}) return ${VNAME}n;
@@ -131,7 +131,7 @@ ${NAME}_Node *${VNAME}n_add(${NAME}_Node *${VNAME}n, // {{{
 	if(!*child)
 		*child = ${VNAME}n_create(key, val);
 	else
-		*child = ${VNAME}n_add(*child, key, val);
+		*child = ${VNAME}n_set(*child, key, val);
 
 	${VNAME}n_fixHeight(${VNAME}n);
 	return ${VNAME}n_balance(${VNAME}n);
@@ -441,7 +441,7 @@ int ${VNAME}_load(${NAME} *${VNAME}, FILE *inFile) { // {{{
 		}
 
 		// add the node to the ${NAME}
-		${VNAME}_add(${VNAME}, key, val);
+		${VNAME}_set(${VNAME}, key, val);
 	}
 
 	if(rnodes != size) {
