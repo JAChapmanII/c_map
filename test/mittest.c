@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 		printf("%d", key);
 		if(i != nodeCount - 1)
 			printf(", ");
-		ismap_add(map, key, "v");
+		ismap_set(map, key, "v");
 	}
 	printf("\n");
 
