@@ -54,6 +54,12 @@ int ${VNAME}_erase(${NAME} *${VNAME}, ${KEY_TYPE} key);
 
 /* Search ${NAME} for a specific node */
 ${NAME}_Node *${VNAME}_find(${NAME} *${VNAME}, ${KEY_TYPE} key);
+/* Determine if a ${NAME} contains the given key, returns a boolean */
+int ${VNAME}_contains(${NAME} *${VNAME}, ${KEY_TYPE} key);
+/* Return a node from a ${NAME}
+ * 	if the ${NAME} doesn't contain the key, a default value is returned
+ */
+${VAL_TYPE} ${VNAME}_get(${NAME} *${VNAME}, ${KEY_TYPE} key);
 
 // Search a ${NAME} for the minimum element
 ${NAME}_Node *${VNAME}_min(${NAME} *${VNAME});

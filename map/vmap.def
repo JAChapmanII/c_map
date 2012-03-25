@@ -10,6 +10,8 @@ C_INCLUDE := #include <string.h>
 KEY_TYPE := char *
 VAL_TYPE := char *
 
+DEFAULT_VAL := NULL
+
 KEY_VALID := (key != NULL)
 VAL_VALID := (val != NULL)
 

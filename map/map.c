@@ -354,6 +354,16 @@ ${NAME}_Node *${VNAME}n_find(${NAME}_Node *${VNAME}n, ${KEY_TYPE} key) { // {{{
 	return ${VNAME}n_find(${VNAME}n->right, key);
 } // }}}
 
+int ${VNAME}_contains(${NAME} *${VNAME}, ${KEY_TYPE} key) {
+	return ${VNAME}_find(${VNAME}, key) != NULL;
+}
+${VAL_TYPE} ${VNAME}_get(${NAME} *${VNAME}, ${KEY_TYPE} key) {
+	${NAME}_Node *node = ${VNAME}_find(${VNAME}, key);
+	if(node)
+		return node->val;
+	return ${DEFAULT_VAL};
+}
+
 void ${VNAME}i_front(${NAME}_Iterator *${VNAME}i, ${NAME} *${VNAME}) { // {{{
 	if(!${VNAME}i || !${VNAME})
 		return;
