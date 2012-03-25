@@ -45,7 +45,7 @@ void ${VNAME}_free(${NAME} *${VNAME}) { // {{{
 } // }}}
 
 ${NAME}_Node *${VNAME}n_create(${KEY_TYPE} key, ${VAL_TYPE} val) { // {{{
-	if(!key || !val)
+	if(!${KEY_VALID} || !${VAL_VALID})
 		return NULL;
 	${NAME}_Node *${VNAME}n = malloc(sizeof(${NAME}_Node));
 	if(!${VNAME}n)
@@ -59,7 +59,7 @@ ${NAME}_Node *${VNAME}n_create(${KEY_TYPE} key, ${VAL_TYPE} val) { // {{{
 	${COPY_KEY}(&${VNAME}n->key, &key);
 	${COPY_VAL}(&${VNAME}n->val, &val);
 
-	if(!${VNAME}n->key || !${VNAME}n->val) {
+	if(!${KEY_VALID} || !${VAL_VALID}) {
 		${VNAME}n_free(${VNAME}n);
 		return NULL;
 	}
