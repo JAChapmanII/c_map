@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include "map_iterator.h"
 ${H_INCLUDE}
 
 /* ${NAME}_Node, a node in an AVL tree */
@@ -19,9 +20,6 @@ typedef struct ${NAME}_Node {
 typedef struct {
 	${NAME}_Node *root;
 } ${NAME};
-
-// Various locations an iterator can be at currently
-typedef enum { IT_BEGIN, IT_END, IT_NODE, IT_INVALID } IteratorType;
 
 // A ${NAME} bidirectional iterator
 typedef struct {
