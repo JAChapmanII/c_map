@@ -3,7 +3,7 @@
 #include <stdlib.h>
 ${C_INCLUDE}
 
-#include "util.h"
+#include "map_util.h"
 
 #define SUCCESS        0
 #define FAILURE        1

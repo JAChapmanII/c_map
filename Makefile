@@ -7,7 +7,7 @@ TESTS=$(BDIR)/mittest
 MAPS=$(MDIR)/vmap $(MDIR)/simap $(MDIR)/ismap
 MOUT=$(LDIR)/vmap.? $(LDIR)/simap.? $(LDIR)/ismap.?
 
-OBJS=$(ODIR)/util.o
+OBJS=$(ODIR)/map_util.o
 
 LDFLAGS=
 CFLAGS=-std=c99 -D_BSD_SOURCE
@@ -33,7 +33,7 @@ dirs:
 	mkdir -p $(MDIR) $(LDIR) $(ODIR) $(BDIR)
 
 # make rules for the tests
-$(BDIR)/mittest: $(ODIR)/mittest.o $(ODIR)/ismap.o $(ODIR)/util.o
+$(BDIR)/mittest: $(ODIR)/mittest.o $(ODIR)/map_util.o $(ODIR)/ismap.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 $(ODIR)/%.o: $(LDIR)/%.c
