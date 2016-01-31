@@ -3,14 +3,14 @@ LDIR=lib
 ODIR=obj
 BDIR=.
 
-TESTS=$(BDIR)/mittest
+TESTS=$(BDIR)/mittest $(BDIR)/simap_mittest
 MAPS=$(MDIR)/vmap $(MDIR)/simap $(MDIR)/ismap
 MOUT=$(LDIR)/vmap.? $(LDIR)/simap.? $(LDIR)/ismap.?
 
 OBJS=$(ODIR)/map_util.o
 
 LDFLAGS=
-CFLAGS=-std=c99 -D_BSD_SOURCE
+CFLAGS=-std=c99 -D_DEFAULT_SOURCE
 CFLAGS+=-pedantic -Wall -Wextra
 CFLAGS+=-I$(LDIR)
 
@@ -34,6 +34,8 @@ dirs:
 
 # make rules for the tests
 $(BDIR)/mittest: $(ODIR)/mittest.o $(ODIR)/map_util.o $(ODIR)/ismap.o
+	$(CC) $(LDFLAGS) -o $@ $^
+$(BDIR)/simap_mittest: $(ODIR)/simap_mittest.o $(ODIR)/simap.o $(ODIR)/map_util.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 $(ODIR)/%.o: $(LDIR)/%.c

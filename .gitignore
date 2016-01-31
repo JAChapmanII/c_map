@@ -2,4 +2,5 @@ lib/ismap.*
 lib/simap.*
 lib/vmap.*
 mittest
+simap_mittest
 obj/*
